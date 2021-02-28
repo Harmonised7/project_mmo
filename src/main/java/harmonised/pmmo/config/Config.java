@@ -1444,35 +1444,49 @@ public class Config
 
             builder.push( "Auto Values" );
             {
-                this.autoGenerateValuesEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for un-assigned items? (May be inaccurate)" )
-                        .translation( "pmmo.autoGenerateValuesEnabled" )
-                        .define( "autoGenerateValuesEnabled", true ) );
 
-                this.autoGenerateRoundedValuesOnly = subscriber.subscribe(builder
-                        .comment( "If this is off, Decimal point level requirements will be assigned during Auto Value generation" )
-                        .translation( "pmmo.autoGenerateRoundedValuesOnly" )
-                        .define( "autoGenerateRoundedValuesOnly", true ) );
+                builder.push( "General" );
+                {
+                    this.autoGenerateValuesEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for un-assigned items? (May be inaccurate)" )
+                            .translation( "pmmo.autoGenerateValuesEnabled" )
+                            .define( "autoGenerateValuesEnabled", true ) );
 
-                this.autoGenerateExtraChanceEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Extra Chance? (Works for Ores/Logs/Plants)" )
-                        .translation( "pmmo.autoGenerateExtraChanceEnabled" )
-                        .define( "autoGenerateExtraChanceEnabled", true ) );
+                    this.autoGenerateWearReqAsCombat = subscriber.subscribe(builder
+                            .comment( "Should Automatically generated values for Wearing be Combat instead of Endurance? (True = Combat, False = Endurance)" )
+                            .translation( "pmmo.autoGenerateWearReqAsCombat" )
+                            .define( "autoGenerateWearReqAsCombat", false ) );
 
-                this.defaultExtraChanceOre = subscriber.subscribe(builder
-                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Ores" )
-                        .translation( "pmmo.defaultExtraChanceOre" )
-                        .defineInRange( "defaultExtraChanceOre", 1D, 0D, 1000000D ) );
+                    this.autoGenerateRoundedValuesOnly = subscriber.subscribe(builder
+                            .comment( "If this is off, Decimal point level requirements will be assigned during Auto Value generation" )
+                            .translation( "pmmo.autoGenerateRoundedValuesOnly" )
+                            .define( "autoGenerateRoundedValuesOnly", true ) );
 
-                this.defaultExtraChanceLog = subscriber.subscribe(builder
-                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Logs" )
-                        .translation( "pmmo.defaultExtraChanceLog" )
-                        .defineInRange( "defaultExtraChanceLog", 2D, 0D, 1000000D ) );
+                    this.autoGenerateExtraChanceEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Extra Chance? (Works for Ores/Logs/Plants)" )
+                            .translation( "pmmo.autoGenerateExtraChanceEnabled" )
+                            .define( "autoGenerateExtraChanceEnabled", true ) );
 
-                this.defaultExtraChancePlant = subscriber.subscribe(builder
-                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Plants" )
-                        .translation( "pmmo.defaultExtraChancePlant" )
-                        .defineInRange( "defaultExtraChancePlant", 1.5D, 0D, 1000000D ) );
+                    this.defaultExtraChanceOre = subscriber.subscribe(builder
+                            .comment( "Valued used by autoGenerateExtraChanceEnabled, for Ores" )
+                            .translation( "pmmo.defaultExtraChanceOre" )
+                            .defineInRange( "defaultExtraChanceOre", 1D, 0D, 1000000D ) );
+
+                    this.defaultExtraChanceLog = subscriber.subscribe(builder
+                            .comment( "Valued used by autoGenerateExtraChanceEnabled, for Logs" )
+                            .translation( "pmmo.defaultExtraChanceLog" )
+                            .defineInRange( "defaultExtraChanceLog", 2D, 0D, 1000000D ) );
+
+                    this.defaultExtraChancePlant = subscriber.subscribe(builder
+                            .comment( "Valued used by autoGenerateExtraChanceEnabled, for Plants" )
+                            .translation( "pmmo.defaultExtraChancePlant" )
+                            .defineInRange( "defaultExtraChancePlant", 1.5D, 0D, 1000000D ) );
+
+                    builder.pop();
+                }
+
+
+
 
 //                this.defaultExtraChanceSmelt = subscriber.subscribe(builder
 //                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Smeltables" )
@@ -1488,111 +1502,118 @@ public class Config
 //                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Brewing Ingredients" )
 //                        .translation( "pmmo.defaultExtraChanceBrewables" )
 //                        .defineInRange( "defaultExtraChanceBrewables", 1.5D, 0D, 1000000D ) );
+                builder.push( "Armor" );
+                {
+                    this.autoGenerateWearReqEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Wear Requirement?" )
+                            .translation( "pmmo.autoGenerateWearReqEnabled" )
+                            .define( "autoGenerateWearReqEnabled", true ) );
 
-                this.autoGenerateWearReqEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Wear Requirement?" )
-                        .translation( "pmmo.autoGenerateWearReqEnabled" )
-                        .define( "autoGenerateWearReqEnabled", true ) );
+                    this.autoGenerateWearReqDynamicallyEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Wear Requirement Dynamically? (This enables Live Scaling, for mods like Tinker's, or Draconic Evolution)" )
+                            .translation( "pmmo.autoGenerateWearReqDynamicallyEnabled" )
+                            .define( "autoGenerateWearReqDynamicallyEnabled", true ) );
 
-                this.autoGenerateWearReqDynamicallyEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Wear Requirement Dynamically? (This enables Live Scaling, for mods like Tinker's, or Draconic Evolution)" )
-                        .translation( "pmmo.autoGenerateWearReqDynamicallyEnabled" )
-                        .define( "autoGenerateWearReqDynamicallyEnabled", true ) );
+                    this.autoGenerateWearReqOffset = subscriber.subscribe(builder
+                            .comment( "Level Offset for all auto-generated Wear Requirements" )
+                            .translation( "pmmo.autoGenerateWearReqOffset" )
+                            .defineInRange( "autoGenerateWearReqOffset", 0D, -1000000D, 1000000D ) );
 
-                this.autoGenerateWearReqOffset = subscriber.subscribe(builder
-                        .comment( "Level Offset for all auto-generated Wear Requirements" )
-                        .translation( "pmmo.autoGenerateWearReqOffset" )
-                        .defineInRange( "autoGenerateWearReqOffset", 0D, -1000000D, 1000000D ) );
+                    this.armorReqScale = subscriber.subscribe(builder
+                            .comment( "How much the Armor value scales the Endurance Requirement for Armor" )
+                            .translation( "pmmo.armorReqScale" )
+                            .defineInRange( "armorReqScale", 4D, 0D, 1000000D ) );
 
-                this.autoGenerateWearReqAsCombat = subscriber.subscribe(builder
-                        .comment( "Should Automatically generated values for Wearing be Combat instead of Endurance? (True = Combat, False = Endurance)" )
-                        .translation( "pmmo.autoGenerateWearReqAsCombat" )
-                        .define( "autoGenerateWearReqAsCombat", false ) );
+                    this.armorToughnessReqScale = subscriber.subscribe(builder
+                            .comment( "How much the Armor Toughness value scales the Endurance Requirement for Armor" )
+                            .translation( "pmmo.armorToughnessReqScale" )
+                            .defineInRange( "armorToughnessReqScale", 6D, 0D, 1000000D ) );
+                    builder.pop();
+                }
+                builder.push( "Weapons" );
+                {
+                    this.autoGenerateWeaponReqEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Weapon Requirement?" )
+                            .translation( "pmmo.autoGenerateWeaponReqEnabled" )
+                            .define( "autoGenerateWeaponReqEnabled", true ) );
 
-                this.autoGenerateWeaponReqEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Weapon Requirement?" )
-                        .translation( "pmmo.autoGenerateWeaponReqEnabled" )
-                        .define( "autoGenerateWeaponReqEnabled", true ) );
+                    this.autoGenerateWeaponReqDynamicallyEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Weapon Requirement Dynamically? (This enables Live Scaling, for mods like Tinker's, or Draconic Evolution)" )
+                            .translation( "pmmo.autoGenerateWeaponReqDynamicallyEnabled" )
+                            .define( "autoGenerateWeaponReqDynamicallyEnabled", true ) );
 
-                this.autoGenerateWeaponReqDynamicallyEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Weapon Requirement Dynamically? (This enables Live Scaling, for mods like Tinker's, or Draconic Evolution)" )
-                        .translation( "pmmo.autoGenerateWeaponReqDynamicallyEnabled" )
-                        .define( "autoGenerateWeaponReqDynamicallyEnabled", true ) );
+                    this.attackDamageReqScale = subscriber.subscribe(builder
+                            .comment( "How much the Attack Damage values scales the Combat Requirement for Weapons" )
+                            .translation( "pmmo.attackDamageReqScale" )
+                            .defineInRange( "attackDamageReqScale", 4D, 0D, 1000000D ) );
 
-                this.autoGenerateWeaponReqOffset = subscriber.subscribe(builder
-                        .comment( "Level Offset for all auto-generated Weapon Requirements" )
-                        .translation( "pmmo.autoGenerateWeaponReqOffset" )
-                        .defineInRange( "autoGenerateWeaponReqOffset", 0D, -1000000D, 1000000D ) );
 
-                this.autoGenerateToolReqEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Tool Requirement?" )
-                        .translation( "pmmo.autoGenerateToolReqEnabled" )
-                        .define( "autoGenerateToolReqEnabled", true ) );
+                    this.autoGenerateWeaponReqOffset = subscriber.subscribe(builder
+                            .comment( "Level Offset for all auto-generated Weapon Requirements" )
+                            .translation( "pmmo.autoGenerateWeaponReqOffset" )
+                            .defineInRange( "autoGenerateWeaponReqOffset", 0D, -1000000D, 1000000D ) );
+                    builder.pop();
+                }
+                builder.push( "Tools" );
+                {
+                    this.toolReqScaleOre = subscriber.subscribe(builder
+                            .comment( "How much the Speed of the tool scales the Requirement of Mining to Use the tool" )
+                            .translation( "pmmo.toolReqScaleOre" )
+                            .defineInRange( "toolReqScaleOre", 5D, 0D, 1000000D ) );
 
-                this.autoGenerateToolReqDynamicallyEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Tool Requirement Dynamically? (This enables Live Scaling, for mods like Tinker's, or Draconic Evolution)" )
-                        .translation( "pmmo.autoGenerateToolReqDynamicallyEnabled" )
-                        .define( "autoGenerateToolReqDynamicallyEnabled", true ) );
+                    this.toolReqScaleLog = subscriber.subscribe(builder
+                            .comment( "How much the Speed of the tool scales the Requirement of Woodcutting to Use the tool" )
+                            .translation( "pmmo.toolReqScaleLog" )
+                            .defineInRange( "toolReqScaleLog", 5D, 0D, 1000000D ) );
 
-                this.autoGenerateToolReqOffset = subscriber.subscribe(builder
-                        .comment( "Level Offset for all auto-generated Tool Requirements" )
-                        .translation( "pmmo.autoGenerateToolReqOffset" )
-                        .defineInRange( "autoGenerateToolReqOffset", 0D, -1000000D, 1000000D ) );
+                    this.toolReqScaleDirt = subscriber.subscribe(builder
+                            .comment( "How much the Speed of the tool scales the Requirement of Excavation to Use the tool" )
+                            .translation( "pmmo.toolReqScaleDirt" )
+                            .defineInRange( "toolReqScaleDirt", 5D, 0D, 1000000D ) );
+                    this.autoGenerateToolReqEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Tool Requirement?" )
+                            .translation( "pmmo.autoGenerateToolReqEnabled" )
+                            .define( "autoGenerateToolReqEnabled", true ) );
 
-                this.autoGenerateCraftingXpEnabled = subscriber.subscribe(builder
-                        .comment( "Automatically assign values for Crafting Experience? (Works for Armor/Tools/Weapons)" )
-                        .translation( "pmmo.autoGenerateCraftingXpEnabled" )
-                        .define( "autoGenerateCraftingXpEnabled", true ) );
+                    this.autoGenerateToolReqDynamicallyEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Tool Requirement Dynamically? (This enables Live Scaling, for mods like Tinker's, or Draconic Evolution)" )
+                            .translation( "pmmo.autoGenerateToolReqDynamicallyEnabled" )
+                            .define( "autoGenerateToolReqDynamicallyEnabled", true ) );
+
+                    this.autoGenerateToolReqOffset = subscriber.subscribe(builder
+                            .comment( "Level Offset for all auto-generated Tool Requirements" )
+                            .translation( "pmmo.autoGenerateToolReqOffset" )
+                            .defineInRange( "autoGenerateToolReqOffset", 0D, -1000000D, 1000000D ) );
+                    builder.pop();
+                }
+                builder.push( "Crafting" );
+                {
+                    this.autoGenerateCraftingXpEnabled = subscriber.subscribe(builder
+                            .comment( "Automatically assign values for Crafting Experience? (Works for Armor/Tools/Weapons)" )
+                            .translation( "pmmo.autoGenerateCraftingXpEnabled" )
+                            .define( "autoGenerateCraftingXpEnabled", true ) );
 
 //                this.autoGenerateKillXpAggresiveEnabled = subscriber.subscribe(builder
 //                        .comment( "Automatically assign values for Aggresive Creatures?" )
 //                        .translation( "pmmo.autoGenerateKillXpEnabled" )
 //                        .define( "autoGenerateKillXpEnabled", true ) );
 
-                this.autoGeneratedCraftingXpValueMultiplierCrafting = subscriber.subscribe(builder
-                        .comment( "Multiplier for the Auto Generated Crafting Xp Value, in the Crafting skill" )
-                        .translation( "pmmo.autoGeneratedCraftingXpValueMultiplierCrafting" )
-                        .defineInRange( "autoGeneratedCraftingXpValueMultiplierCrafting", 1D, 0D, 1000000D ) );
+                    this.autoGeneratedCraftingXpValueMultiplierCrafting = subscriber.subscribe(builder
+                            .comment( "Multiplier for the Auto Generated Crafting Xp Value, in the Crafting skill" )
+                            .translation( "pmmo.autoGeneratedCraftingXpValueMultiplierCrafting" )
+                            .defineInRange( "autoGeneratedCraftingXpValueMultiplierCrafting", 1D, 0D, 1000000D ) );
 
-                this.autoGeneratedCraftingXpValueMultiplierSmithing = subscriber.subscribe(builder
-                        .comment( "Multiplier for the Auto Generated Crafting Xp Value, in the Smithing skill" )
-                        .translation( "pmmo.autoGeneratedCraftingXpValueMultiplierSmithing" )
-                        .defineInRange( "autoGeneratedCraftingXpValueMultiplierSmithing", 1D, 0D, 1000000D ) );
+                    this.autoGeneratedCraftingXpValueMultiplierSmithing = subscriber.subscribe(builder
+                            .comment( "Multiplier for the Auto Generated Crafting Xp Value, in the Smithing skill" )
+                            .translation( "pmmo.autoGeneratedCraftingXpValueMultiplierSmithing" )
+                            .defineInRange( "autoGeneratedCraftingXpValueMultiplierSmithing", 1D, 0D, 1000000D ) );
+                    builder.pop();
+                }
 
 //                this.autoGeneratedKillXpValueAggresiveMultiplierSlayer = subscriber.subscribe(builder
 //                        .comment( "Multiplier for the Auto Generated Kill Xp Value for Aggresive Creatures, in the Slayer skill" )
 //                        .translation( "pmmo.autoGeneratedKillXpValueAggresiveMultiplierSlayer" )
 //                        .defineInRange( "autoGeneratedKillXpValueAggresiveMultiplierSlayer", 1D, 0D, 1000000D ) );
-
-                this.armorReqScale = subscriber.subscribe(builder
-                        .comment( "How much the Armor value scales the Endurance Requirement for Armor" )
-                        .translation( "pmmo.armorReqScale" )
-                        .defineInRange( "armorReqScale", 4D, 0D, 1000000D ) );
-
-                this.armorToughnessReqScale = subscriber.subscribe(builder
-                        .comment( "How much the Armor Toughness value scales the Endurance Requirement for Armor" )
-                        .translation( "pmmo.armorToughnessReqScale" )
-                        .defineInRange( "armorToughnessReqScale", 6D, 0D, 1000000D ) );
-
-                this.attackDamageReqScale = subscriber.subscribe(builder
-                        .comment( "How much the Attack Damage values scales the Combat Requirement for Weapons" )
-                        .translation( "pmmo.attackDamageReqScale" )
-                        .defineInRange( "attackDamageReqScale", 4D, 0D, 1000000D ) );
-
-                this.toolReqScaleOre = subscriber.subscribe(builder
-                        .comment( "How much the Speed of the tool scales the Requirement of Mining to Use the tool" )
-                        .translation( "pmmo.toolReqScaleOre" )
-                        .defineInRange( "toolReqScaleOre", 5D, 0D, 1000000D ) );
-
-                this.toolReqScaleLog = subscriber.subscribe(builder
-                        .comment( "How much the Speed of the tool scales the Requirement of Woodcutting to Use the tool" )
-                        .translation( "pmmo.toolReqScaleLog" )
-                        .defineInRange( "toolReqScaleLog", 5D, 0D, 1000000D ) );
-
-                this.toolReqScaleDirt = subscriber.subscribe(builder
-                        .comment( "How much the Speed of the tool scales the Requirement of Excavation to Use the tool" )
-                        .translation( "pmmo.toolReqScaleDirt" )
-                        .defineInRange( "toolReqScaleDirt", 5D, 0D, 1000000D ) );
 
                 builder.pop();
             }

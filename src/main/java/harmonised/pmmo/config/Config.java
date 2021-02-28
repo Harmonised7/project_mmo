@@ -1485,9 +1485,6 @@ public class Config
                     builder.pop();
                 }
 
-
-
-
 //                this.defaultExtraChanceSmelt = subscriber.subscribe(builder
 //                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Smeltables" )
 //                        .translation( "pmmo.defaultExtraChanceSmelt" )
@@ -1502,6 +1499,7 @@ public class Config
 //                        .comment( "Valued used by autoGenerateExtraChanceEnabled, for Brewing Ingredients" )
 //                        .translation( "pmmo.defaultExtraChanceBrewables" )
 //                        .defineInRange( "defaultExtraChanceBrewables", 1.5D, 0D, 1000000D ) );
+                
                 builder.push( "Armor" );
                 {
                     this.autoGenerateWearReqEnabled = subscriber.subscribe(builder
@@ -1530,6 +1528,7 @@ public class Config
                             .defineInRange( "armorToughnessReqScale", 6D, 0D, 1000000D ) );
                     builder.pop();
                 }
+                
                 builder.push( "Weapons" );
                 {
                     this.autoGenerateWeaponReqEnabled = subscriber.subscribe(builder
@@ -1554,6 +1553,7 @@ public class Config
                             .defineInRange( "autoGenerateWeaponReqOffset", 0D, -1000000D, 1000000D ) );
                     builder.pop();
                 }
+                
                 builder.push( "Tools" );
                 {
                     this.toolReqScaleOre = subscriber.subscribe(builder
@@ -1586,6 +1586,7 @@ public class Config
                             .defineInRange( "autoGenerateToolReqOffset", 0D, -1000000D, 1000000D ) );
                     builder.pop();
                 }
+                
                 builder.push( "Crafting" );
                 {
                     this.autoGenerateCraftingXpEnabled = subscriber.subscribe(builder

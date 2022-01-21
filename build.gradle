@@ -151,8 +151,8 @@ dependencies
             runtimeOnly fg.deobf("curse.maven:cgm:3224957")
             runtimeOnly fg.deobf("curse.maven:obfuscate:3336021")
 
-            compileOnly fg.deobf("curse.maven:dynamictrees:3304858")
-            runtimeOnly fg.deobf("curse.maven:dynamictrees:3304858")
+            compileOnly fg.deobf("curse.maven:dynamictrees:3611214")
+            runtimeOnly fg.deobf("curse.maven:dynamictrees:3611214")
 
 
 //            compileOnly fg.deobf("curse.maven:engineers-decor:3253781")

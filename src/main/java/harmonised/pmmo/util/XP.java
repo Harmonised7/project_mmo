@@ -1382,7 +1382,7 @@ public class XP
 					int commandLevel = (int) Math.floor(entry.getValue());
 					if(startLevel < commandLevel && currLevel >= commandLevel)
 					{
-						String command = entry.getKey().replace(">player<", playerName).replace(">level<", "" + commandLevel);
+						String command = entry.getKey().replace(">player<", player.getName().getString()).replace(">level<", "" + commandLevel);
 						try
 						{
 							player.getServer().getCommandManager().getDispatcher().execute(command, player.getServer().getCommandSource());

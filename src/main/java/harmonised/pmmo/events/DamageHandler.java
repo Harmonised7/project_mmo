@@ -35,6 +35,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.Constants.NBT;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
@@ -61,6 +62,58 @@ public class DamageHandler
         double saveChancePerLevel = Math.min(maxFallSaveChance, Config.forgeConfig.saveChancePerLevel.get() / 100);
 
         return agilityLevel * saveChancePerLevel;
+    }
+
+    public static void handleAttack(LivingAttackEvent event)
+    {
+        LivingEntity target = event.getEntityLiving();
+        Entity source = event.getSource().getTrueSource();
+        if (target != null && source instanceof ServerPlayerEntity)
+        {
+            ServerPlayerEntity player = (ServerPlayerEntity) source;
+            if(XP.isPlayerSurvival(player))
+            {
+                ItemStack mainItemStack = player.getHeldItemMainhand();
+                ResourceLocation mainResLoc = player.getHeldItemMainhand().getItem().getRegistryName();
+                ResourceLocation offResLoc = player.getHeldItemOffhand().getItem().getRegistryName();
+                Map<String, Double> weaponReq = XP.getXpBypass(mainResLoc, JType.REQ_WEAPON);
+                NBTHelper.maxDoubleMaps(weaponReq, XP.getXpBypass(offResLoc, JType.REQ_WEAPON));
+                String skill;
+                String itemSpecificSkill = AutoValues.getItemSpecificSkill(mainItemStack.getItem().getRegistryName().toString());
+                boolean swordInMainHand = mainItemStack.getItem() instanceof SwordItem;
+                if(itemSpecificSkill != null)
+                    skill = itemSpecificSkill;
+                else
+                {
+                    if(event.getSource().damageType.equals("arrow"))
+                        skill = Skill.ARCHERY.toString();
+                    else
+                    {
+                        skill = Skill.COMBAT.toString();
+                        if(Util.getDistance(player.getPositionVec(), target.getPositionVec()) > 4.20 + target.getWidth() + (swordInMainHand ? 1.523 : 0))
+                            skill = Skill.MAGIC.toString(); //Magically far melee damage
+                    }
+                }
+                int weaponGap = 0;
+                if(Config.getConfig("weaponReqEnabled") != 0)
+                {
+                    if(Config.getConfig("autoGenerateValuesEnabled") != 0 && Config.getConfig("autoGenerateWeaponReqDynamicallyEnabled") != 0)
+                        weaponReq.put(skill, weaponReq.getOrDefault(skill, AutoValues.getWeaponReqFromStack(mainItemStack)));
+                    weaponGap = XP.getSkillReqGap(player, weaponReq);
+                    int enchantGap = XP.getSkillReqGap(player, XP.getEnchantsUseReq(player.getHeldItemMainhand()));
+                    int gap = Math.max(weaponGap, enchantGap);
+                    if(gap > 0)
+                    {
+                        if(enchantGap < gap)
+                            NetworkHandler.sendToPlayer(new MessageDoubleTranslation("pmmo.notSkilledEnoughToUseAsWeapon", player.getHeldItemMainhand().getTranslationKey(), "", true, 2), (ServerPlayerEntity) player);
+                        if(Config.forgeConfig.strictReqWeapon.get())
+                        {
+                            event.setCanceled(true);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public static void handleDamage(LivingHurtEvent event)
@@ -198,24 +251,6 @@ public class DamageHandler
 
                     int killGap = 0;
                     int weaponGap = 0;
-                    if(Config.getConfig("weaponReqEnabled") != 0)
-                    {
-                        if(Config.getConfig("autoGenerateValuesEnabled") != 0 && Config.getConfig("autoGenerateWeaponReqDynamicallyEnabled") != 0)
-                            weaponReq.put(skill, weaponReq.getOrDefault(skill, AutoValues.getWeaponReqFromStack(mainItemStack)));
-                        weaponGap = XP.getSkillReqGap(player, weaponReq);
-                        int enchantGap = XP.getSkillReqGap(player, XP.getEnchantsUseReq(player.getHeldItemMainhand()));
-                        int gap = Math.max(weaponGap, enchantGap);
-                        if(gap > 0)
-                        {
-                            if(enchantGap < gap)
-                                NetworkHandler.sendToPlayer(new MessageDoubleTranslation("pmmo.notSkilledEnoughToUseAsWeapon", player.getHeldItemMainhand().getTranslationKey(), "", true, 2), (ServerPlayerEntity) player);
-                            if(Config.forgeConfig.strictReqWeapon.get())
-                            {
-                                event.setCanceled(true);
-                                return;
-                            }
-                        }
-                    }
 
                     //Apply damage bonuses
                     //Combat is taken care of in AttributeHandler

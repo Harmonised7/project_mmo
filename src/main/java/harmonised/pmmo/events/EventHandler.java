@@ -45,6 +45,12 @@ public class EventHandler
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public static void livingAttack(LivingAttackEvent event)
+	{
+		DamageHandler.handleAttack(event);
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void livingHurt(LivingHurtEvent event)
 	{
 		DamageHandler.handleDamage(event);

@@ -1147,8 +1147,8 @@ public class Config
 
                 this.worldXpDropsRotationCap = subscriber.subscribe(builder
                         .comment("How far (Max) should World Xp Drops be rotated (Degrees, either direction from flat)")
-                        .translation("pmmo.worldXpDropsDecaySpeedMultiplier")
-                        .defineInRange("worldXpDropsDecaySpeedMultiplier", 1D, 0D, 180D));
+                        .translation("pmmo.worldXpDropsRotationCap")
+                        .defineInRange("worldXpDropsRotationCap", 1D, 0D, 180D));
 
                 builder.pop();
             }
@@ -1251,8 +1251,8 @@ public class Config
 
                 this.defaultSaplingGrowXp = subscriber.subscribe(builder
                         .comment("How much xp should be awarded in Farming for growing a sapling? (Json Overrides this) (Set to 0 to disable default xp)")
-                        .translation("pmmo.defaultBreedingXp")
-                        .defineInRange("defaultBreedingXp", 25.0D, 0, 1000000));
+                        .translation("pmmo.defaultSaplingGrowXp")
+                        .defineInRange("defaultSaplingGrowXp", 25.0D, 0, 1000000));
 
                 this.growthSpeedIncreasePerLevel = subscriber.subscribe(builder
                         .comment("How much faster on average should crops grow per level? (Percentage)")
@@ -1261,8 +1261,8 @@ public class Config
 
                 this.defaultCropGrowXp = subscriber.subscribe(builder
                         .comment("How much xp should be awarded in Farming for growing crops? (Json Overrides this) (Set to 0 to disable default xp)")
-                        .translation("pmmo.defaultBreedingXp")
-                        .defineInRange("defaultBreedingXp", 15.0D, 0, 1000000));
+                        .translation("pmmo.defaultCropGrowXp")
+                        .defineInRange("defaultCropGrowXp", 15.0D, 0, 1000000));
 
                 builder.pop();
             }

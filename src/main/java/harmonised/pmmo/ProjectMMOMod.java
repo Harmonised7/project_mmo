@@ -56,13 +56,6 @@ public class ProjectMMOMod
         WebHandler.updateInfo();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::modsLoading);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientLoading);
-        if(ModList.get().isLoaded("ftbquests"))
-        {
-            FTBQHandler.init();
-        }
-        jeiLoaded = ModList.get().isLoaded("jei");
-        tinkersLoaded = ModList.get().isLoaded("tconstruct");
-        dynamicTreesLoaded = ModList.get().isLoaded("dynamictrees");
 
         MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
         MinecraftForge.EVENT_BUS.addListener(this::serverStart);
@@ -81,6 +74,14 @@ public class ProjectMMOMod
         NetworkHandler.registerPackets();
         MinecraftForge.EVENT_BUS.register(harmonised.pmmo.events.EventHandler.class);
         MinecraftForge.EVENT_BUS.register(harmonised.pmmo.skills.AttributeHandler.class);
+        
+        if(ModList.get().isLoaded("ftbquests"))
+        {
+            FTBQHandler.init();
+        }
+        jeiLoaded = ModList.get().isLoaded("jei");
+        tinkersLoaded = ModList.get().isLoaded("tconstruct");
+        dynamicTreesLoaded = ModList.get().isLoaded("dynamictrees");
     }
 
     private void clientLoading(FMLClientSetupEvent event)

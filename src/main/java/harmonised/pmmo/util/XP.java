@@ -1250,7 +1250,7 @@ public class XP
 		}
 
 		NetworkHandler.sendToPlayer( new MessageXp( startXp, skill, amount, skip ), (EntityPlayerMP) player );
-		if( !skip )
+		if( !skip && FConfig.getConfig( "printXpGainedToConsole" ) != 0 )
 			LOGGER.info( playerName + " +" + amount + "xp in: "  + skill + " for: " + sourceName + " total xp: " + Skill.getXp( skill, uuid ) );
 
 		if( startXp + amount >= maxXp && startXp < maxXp )
@@ -1682,7 +1682,7 @@ public class XP
 		int maxLevel = (int) Math.floor( FConfig.getConfig( "maxLevel" ) );
 		double xpIncreasePerLevel = FConfig.getConfig( "xpIncreasePerLevel" );
 
-		int theXp = 0;
+		double theXp = 0;
 
 		for( int level = 0; ; level++ )
 		{

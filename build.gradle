@@ -56,7 +56,7 @@ apply plugin: "com.wynprice.cursemaven"
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "1.12-3.44.3"
+version = "1.12-3.45.1523"
 group = "harmonised.pmmo" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Project_MMO"
 
@@ -90,6 +90,8 @@ dependencies
 
     compile files( "TConstruct-1.12.2-2.13.0.183.jar" )
     compile files( "Mantle-1.12-1.3.3.55.jar" )
+    compile files( "exnihilocreatio-1.12.2-0.4.7.2.jar" )
+    compile files( "Forgelin-1.8.4.jar" )
 }
 
 processResources {

@@ -22,10 +22,12 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.logging.log4j.LogManager;
@@ -80,8 +82,9 @@ public class WorldTickHandler
         if( event.world.getMinecraftServer() == null )
             return;
 
-        for( EntityPlayer player : event.world.getMinecraftServer().getPlayerList().getPlayers() )
+        for( EntityPlayer thePlayer : event.world.getMinecraftServer().getPlayerList().getPlayers() )
         {
+            final EntityPlayerMP player = (EntityPlayerMP) thePlayer;
             playerUUID = player.getUniqueID();
 
             for( int i = 0; i < veinSpeed; i++ )
@@ -163,18 +166,16 @@ public class WorldTickHandler
         }
     }
 
-    public static void destroyBlock( World world, BlockPos pos, EntityPlayer player, ItemStack toolUsed )
+    public static void destroyBlock( World world, BlockPos pos, EntityPlayerMP player, ItemStack toolUsed )
     {
         IBlockState state = world.getBlockState(pos);
         world.playEvent(2001, pos, Block.getStateId(state) );
 
-        List<ItemStack> drops = state.getBlock().getDrops(world, pos, state, EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, toolUsed ) );
-        for( ItemStack itemStack : drops )
-        {
-            Block.spawnAsEntity( world, pos, itemStack );
-        }
+        player.interactionManager.blockRemoving(pos);
+        state.getBlock().harvestBlock(world, player, pos, state, world.getTileEntity(pos), toolUsed);
+        state.getBlock().removedByPlayer(state, world, pos, player, true);
 
-        if( FConfig.damageToolWhileVeining && world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3) && toolUsed.isItemStackDamageable() && !player.isCreative() )
+        if( FConfig.damageToolWhileVeining && toolUsed.isItemStackDamageable() && !player.isCreative() )
             toolUsed.damageItem( 1, player );
     }
 

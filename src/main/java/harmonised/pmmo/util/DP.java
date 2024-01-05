@@ -22,10 +22,19 @@ public class DP
 			input /= 1000000;
 			prefix = 'm';
 		}
-		else if( input >= 1000000000 )
+		else if( input >= 1000000000 && input < 1000000000000L )
 		{
 			input /= 1000000000;
 			prefix = 'b';
+		}
+		else if( input >= 1000000000000L && input < 1000000000000000L )
+		{
+			input /= 1000000000000.0;
+			prefix = 't';
+		}
+		else if( input >= 1000000000000000L )
+		{
+			return String.format( Locale.ENGLISH , "%.3e", input );
 		}
 
 		if( prefix == ' ' )
